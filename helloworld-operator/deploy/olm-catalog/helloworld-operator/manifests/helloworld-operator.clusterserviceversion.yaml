@@ -1,0 +1,175 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: |-
+      [
+        {
+          "apiVersion": "hello.example.com/v1alpha1",
+          "kind": "Helloworld",
+          "metadata": {
+            "name": "you-helloworld"
+          },
+          "spec": {
+            "hello": "world",
+            "size": 3
+          }
+        }
+      ]
+    capabilities: Basic Install
+  name: helloworld-operator.v0.0.1
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - kind: Helloworld
+      displayName: Helloworld
+      name: helloworlds.hello.example.com
+      description: Helloworld CRD
+      version: v1alpha1
+  description: Simple Ansible Operator just for testing and learning
+  displayName: Hello World Operator
+  install:
+    spec:
+      deployments:
+      - name: helloworld-operator
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              name: helloworld-operator
+          strategy: {}
+          template:
+            metadata:
+              labels:
+                name: helloworld-operator
+            spec:
+              containers:
+              - env:
+                - name: WATCH_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.annotations['olm.targetNamespaces']
+                - name: POD_NAME
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.name
+                - name: OPERATOR_NAME
+                  value: helloworld-operator
+                - name: ANSIBLE_GATHERING
+                  value: explicit
+                image: quay.io/sbergste/helloword-operator:v0.0.1
+                imagePullPolicy: Always
+                livenessProbe:
+                  httpGet:
+                    path: /healthz
+                    port: 6789
+                  initialDelaySeconds: 60
+                  periodSeconds: 10
+                name: helloworld-operator
+                resources: {}
+                volumeMounts:
+                - mountPath: /tmp/ansible-operator/runner
+                  name: runner
+              serviceAccountName: helloworld-operator
+              volumes:
+              - emptyDir: {}
+                name: runner
+      permissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - pods
+          - services
+          - services/finalizers
+          - endpoints
+          - persistentvolumeclaims
+          - events
+          - configmaps
+          - secrets
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - apps
+          resources:
+          - deployments
+          - daemonsets
+          - replicasets
+          - statefulsets
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - servicemonitors
+          verbs:
+          - get
+          - create
+        - apiGroups:
+          - apps
+          resourceNames:
+          - helloworld-operator
+          resources:
+          - deployments/finalizers
+          verbs:
+          - update
+        - apiGroups:
+          - ""
+          resources:
+          - pods
+          verbs:
+          - get
+        - apiGroups:
+          - apps
+          resources:
+          - replicasets
+          - deployments
+          verbs:
+          - get
+        - apiGroups:
+          - hello.example.com
+          resources:
+          - '*'
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        serviceAccountName: helloworld-operator
+    strategy: deployment
+  installModes:
+  - supported: true
+    type: OwnNamespace
+  - supported: true
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: false
+    type: AllNamespaces
+  keywords:
+  - ansible
+  - hello
+  links:
+  - name: Helloworld Operator
+    url: https://helloworld-operator.org
+  maturity: alpha
+  provider:
+    name: stefanb
+  version: 0.0.1

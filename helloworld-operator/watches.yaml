@@ -1,0 +1,6 @@
+---
+- version: v1alpha1
+  group: hello.example.com
+  kind: Helloworld
+  role: helloworld 
+#  role: /home/stefan/helloworld-operator/helloworld-operator/roles/helloworld

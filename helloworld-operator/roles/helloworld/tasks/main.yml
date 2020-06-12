@@ -1,0 +1,6 @@
+---
+# tasks file for helloworld
+- debug:
+    msg: "Hello World: name: {{ meta.name }}, {{ meta.namespace }}"
+- debug:
+    msg: "hello: {{ hello }}, size {{ size }}"

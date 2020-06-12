@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: helloworld-operator-catalog
+spec:
+  sourceType: grpc
+  image: quay.io/sbergste/helloworld-operator-index:v0.0.6
+  displayName: Hello World Operator Catalog
+  publisher: StefanB
+
+
