@@ -2,5 +2,35 @@
 # tasks file for helloworld
 - debug:
     msg: "Hello World: name: {{ meta.name }}, {{ meta.namespace }}"
+
 - debug:
     msg: "hello: {{ hello }}, size {{ size }}"
+
+- name: AZURE_TENANT=
+  shell: "echo $AZURE_TENANT"
+
+- name: Config Map 
+  k8s:
+    state: "{{ state | default('present') }}"
+    definition: "{{ lookup('template', 'configmap.yaml') }}"
+  ignore_errors: true
+
+- name: Create resource group
+  azure_rm_resourcegroup:
+    name: ansible-rg-001
+    location: eastus
+    state: "{{ state | default('present') }}"
+  register: rg
+
+- debug:
+    var: rg
+
+
+- k8s_status:
+    api_version: hello.example.com/v1alpha1
+    kind: Helloworld
+    name: "{{ meta.name }}"
+    namespace: "{{ meta.namespace }}"
+    status:
+      whoami: "Name: {{ meta.name }} - Namespace{{ meta.namespace }}"
+

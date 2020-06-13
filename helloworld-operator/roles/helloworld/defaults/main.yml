@@ -2,3 +2,9 @@
 # defaults file for helloworld
 hello: world
 size: 1
+state: present
+
+meta:
+  name: my-name
+  namespace: my-namespace
+
