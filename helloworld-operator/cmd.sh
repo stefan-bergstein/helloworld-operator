@@ -1,6 +1,26 @@
 
 case "$1" in
 
+secret)
+
+oc create secret generic helloworld-operator-azure-conf --from-literal=AZURE_TENANT=$AZURE_TENANT --from-literal=AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID --from-literal=AZURE_CLIENT_ID=$AZURE_CLIENT_ID --from-literal=AZURE_SECRET=$AZURE_SECRET
+
+;;
+
+
+build)
+
+operator-sdk build quay.io/sbergste/helloword-operator:v0.0.1
+docker push quay.io/sbergste/helloword-operator:v0.0.1
+oc create -f deploy/service_account.yaml
+oc create -f deploy/role.yaml
+oc create -f deploy/role_binding.yaml
+oc create -f deploy/operator.yaml
+
+
+;;
+
+
 bundle)
 
 ver=v0.0.6

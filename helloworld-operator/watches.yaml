@@ -2,5 +2,9 @@
 - version: v1alpha1
   group: hello.example.com
   kind: Helloworld
+  manageStatus: false
   role: helloworld 
-#  role: /home/stefan/helloworld-operator/helloworld-operator/roles/helloworld
+  finalizer:
+    name: finalizer.hello.example.com
+    vars:
+      state: absent

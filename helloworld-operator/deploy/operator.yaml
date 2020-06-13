@@ -35,6 +35,27 @@ spec:
               value: "helloworld-operator"
             - name: ANSIBLE_GATHERING
               value: explicit
+            # Azure config        
+            - name: AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: AZURE_CLIENT_ID
+                  name: helloworld-operator-azure-conf
+            - name: AZURE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: AZURE_SECRET
+                  name: helloworld-operator-azure-conf
+            - name: AZURE_SUBSCRIPTION_ID
+              valueFrom:
+                secretKeyRef:
+                  key: AZURE_SUBSCRIPTION_ID
+                  name: helloworld-operator-azure-conf
+            - name: AZURE_TENANT
+              valueFrom:
+                secretKeyRef:
+                  key: AZURE_TENANT
+                  name: helloworld-operator-azure-conf
           livenessProbe:
             httpGet:
               path: /healthz
