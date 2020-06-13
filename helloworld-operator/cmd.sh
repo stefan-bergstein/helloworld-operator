@@ -23,7 +23,7 @@ oc create -f deploy/operator.yaml
 
 bundle)
 
-ver=v0.0.6
+ver=v0.0.7
 operator-sdk bundle create quay.io/sbergste/helloworld-operator-catalog --channels alpha --package helloworld-operator-catalog --directory deploy/olm-catalog/helloworld-operator/manifests/
 docker tag quay.io/sbergste/helloworld-operator-catalog:latest quay.io/sbergste/helloworld-operator-catalog:${ver}
 docker push quay.io/sbergste/helloworld-operator-catalog:${ver}

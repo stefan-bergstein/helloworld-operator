@@ -1,0 +1,9 @@
+apiVersion: hello.example.com/v1alpha1
+kind: Heyyou
+metadata:
+  name: example-heyyou
+spec:
+  # Add fields here
+  size: 3
+  hey: you
+

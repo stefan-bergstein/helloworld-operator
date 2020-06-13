@@ -1,10 +1,10 @@
 ---
-# tasks file for helloworld
+# tasks file for heyyou
 - debug:
-    msg: "Hello World: name: {{ meta.name }}, {{ meta.namespace }}"
+    msg: "Hey You: name: {{ meta.name }}, {{ meta.namespace }}"
 
 - debug:
-    msg: "hello: {{ hello }}, size {{ size }}"
+    msg: "hey: {{ hey }}, size {{ size }}"
 
 - name: Config Map 
   k8s:
@@ -15,7 +15,7 @@
 # Set status
 - k8s_status:
     api_version: hello.example.com/v1alpha1
-    kind: Helloworld
+    kind: Heyyou
     name: "{{ meta.name }}"
     namespace: "{{ meta.namespace }}"
     status:

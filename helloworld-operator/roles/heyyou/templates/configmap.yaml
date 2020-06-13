@@ -4,5 +4,5 @@ metadata:
   name: example-config-{{ meta.name }}
   namespace: {{ meta.namespace }}
 data: 
-  example.property.1: hello
-  example.property.2: world
+  example.property.1: hey
+  example.property.2: you

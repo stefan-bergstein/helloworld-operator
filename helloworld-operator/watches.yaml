@@ -1,9 +1,22 @@
 ---
+
+# Watch Helloworld and call role helloworld
 - version: v1alpha1
   group: hello.example.com
   kind: Helloworld
   manageStatus: false
   role: helloworld 
+  finalizer:
+    name: finalizer.hello.example.com
+    vars:
+      state: absent
+
+# Watch Heyyou and call role heyyou
+- version: v1alpha1
+  group: hello.example.com
+  kind: Heyyou
+  manageStatus: false
+  role: heyyou 
   finalizer:
     name: finalizer.hello.example.com
     vars:

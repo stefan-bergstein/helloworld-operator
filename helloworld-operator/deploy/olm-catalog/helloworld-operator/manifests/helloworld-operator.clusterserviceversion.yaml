@@ -8,10 +8,21 @@ metadata:
           "apiVersion": "hello.example.com/v1alpha1",
           "kind": "Helloworld",
           "metadata": {
-            "name": "you-helloworld"
+            "name": "example-helloworld"
           },
           "spec": {
             "hello": "world",
+            "size": 3
+          }
+        },
+        {
+          "apiVersion": "hello.example.com/v1alpha1",
+          "kind": "Heyyou",
+          "metadata": {
+            "name": "you-heyyou"
+          },
+          "spec": {
+            "hey": "you",
             "size": 3
           }
         }
@@ -27,6 +38,11 @@ spec:
       displayName: Helloworld
       name: helloworlds.hello.example.com
       description: Helloworld CRD
+      version: v1alpha1
+    - kind: Heyyou
+      displayName: Heyyou
+      name: heyyous.hello.example.com
+      description: Heyyou CRD
       version: v1alpha1
   description: Simple Ansible Operator just for testing and learning
   displayName: Hello World Operator

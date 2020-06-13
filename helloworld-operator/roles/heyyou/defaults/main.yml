@@ -1,6 +1,6 @@
 ---
-# defaults file for helloworld
-hello: world
+# defaults file for heyyou
+hey: you
 size: 1
 state: present
 
