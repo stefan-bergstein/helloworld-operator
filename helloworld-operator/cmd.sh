@@ -23,12 +23,17 @@ oc create -f deploy/operator.yaml
 
 bundle)
 
-ver=v0.0.7
+ver=v0.0.1
 operator-sdk bundle create quay.io/sbergste/helloworld-operator-catalog --channels alpha --package helloworld-operator-catalog --directory deploy/olm-catalog/helloworld-operator/manifests/
 docker tag quay.io/sbergste/helloworld-operator-catalog:latest quay.io/sbergste/helloworld-operator-catalog:${ver}
 docker push quay.io/sbergste/helloworld-operator-catalog:${ver}
 opm index add -c docker --bundles quay.io/sbergste/helloworld-operator-catalog:${ver} --tag quay.io/sbergste/helloworld-operator-index:${ver}
 docker push quay.io/sbergste/helloworld-operator-index:${ver}
+
+oc delete CatalogSource helloworld-operator-catalog -n openshift-marketplace
+sed -i  "s|quay.io/sbergste/helloworld-operator-index:.*|quay.io/sbergste/helloworld-operator-index:${ver}|"  deploy/catalogsource.yaml
+oc apply -f deploy/catalogsource.yaml -n openshift-marketplace
+
 ;;
 
 *)
